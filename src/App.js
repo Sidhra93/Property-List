@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Data from './data'
-import Card from './components/Card'
+import ResultCard from './components/ResultCard'
+import SavedCard from './components/SavedCard'
 
 class App extends Component {
   state = {
@@ -9,8 +10,23 @@ class App extends Component {
     saved: Data.saved
   }
 
-  hoverHandler = () => {
-    console.log('hello')
+  addClickHandler = (index) => {
+    var newSaved = this.state.saved.slice()
+    newSaved.push(this.state.results[index])
+    this.setState({saved: newSaved})
+  }
+
+  removeClickHandler = (propertyId) => {
+    var newSaved = this.state.saved.slice()
+    var index = -1
+    for (var i = 0; i < newSaved.length; i++) {
+      if (newSaved[i]['id'] === propertyId){
+        index = i
+        break;
+      }
+    }
+    newSaved.splice(index, 1)
+    this.setState({saved: newSaved})
   }
 
 
@@ -21,13 +37,14 @@ class App extends Component {
           <div className='col-6 results'>
             <p>Results</p>
             {this.state.results.map((property, index) =>
-              <Card
+              <ResultCard
                 key={property['id']}
+                index={index}
                 logo={property['agency']['logo']}
                 image={property['mainImage']}
                 price={property['price']}
                 background={property['agency']['brandingColors']['primary']}
-                onMouseEnter={this.hoverHandler}
+                addClick={this.addClickHandler}
               />
             )}
 
@@ -35,13 +52,14 @@ class App extends Component {
           <div className='col-6 saved'>
             <p>Saved Properties</p>
             {this.state.saved.map((property, index) =>
-              <Card
+              <SavedCard
                 key={property['id']}
+                propertyId={property['id']}
                 logo={property['agency']['logo']}
                 image={property['mainImage']}
                 price={property['price']}
                 background={property['agency']['brandingColors']['primary']}
-
+                removeClick = {this.removeClickHandler}
               />
             )}
           </div>
