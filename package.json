@@ -1,8 +1,8 @@
 {
   "name": "property-list",
-  "homepage": "https://Sidhra93.github.io/Property-List-Demo",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Sidhra93.github.io/property-list-demo",
   "dependencies": {
     "gh-pages": "^1.1.0",
     "react": "^16.2.0",
