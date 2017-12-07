@@ -12,13 +12,11 @@ class App extends Component {
 
   addClickHandler = (index) => {
     var newSaved = this.state.saved.slice()
-    for (var i = 0; i < newSaved.length; i++) {
-      if (!newSaved.includes(this.state.results[index])) {
-        newSaved.push(this.state.results[index])
-        this.setState({saved: newSaved})
-        break;        
-      }
+    if (!newSaved.includes(this.state.results[index])) {
+      newSaved.push(this.state.results[index])
+      this.setState({saved: newSaved})
     }
+    document.querySelectorAll('.results button')[index].disabled = true
   }
 
   removeClickHandler = (propertyId) => {
@@ -32,6 +30,13 @@ class App extends Component {
     }
     newSaved.splice(index, 1)
     this.setState({saved: newSaved})
+    for (var resultsIndex = 0; resultsIndex < this.state.results.length; resultsIndex++) {
+      if (this.state.results[resultsIndex]['id'] === propertyId) {
+        document.querySelectorAll('.results button')[resultsIndex].disabled = false
+        break;
+
+      }
+    }
   }
 
   render() {
